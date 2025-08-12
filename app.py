@@ -117,7 +117,7 @@ class AzureAIClient:
                 api_key=AZURE_OPENAI_KEY,
                 api_version=AZURE_OPENAI_VERSION
             )
-        self.deployment_name = GPT5_DEPLOYMENT_NAME
+        self.model_name = "gpt-5-chat"
         self.system_prompt = (
             "You are an elite legal AI assistant for ADR Chambers, specializing in arbitration, mediation, "
             "and dispute resolution. Always conclude with: "
@@ -138,7 +138,7 @@ class AzureAIClient:
                 messages.append({"role": "user", "content": message})
             
             response = self.client.chat.completions.create(
-                model=self.deployment_name,
+                model=self.model_name,
                 messages=messages,
                 temperature=0.1,
                 max_tokens=4000,
