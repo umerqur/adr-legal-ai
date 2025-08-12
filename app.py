@@ -137,14 +137,30 @@ class AzureAIClient:
             else:
                 messages.append({"role": "user", "content": message})
             
-            response = self.client.chat.completions.create(
-                model=self.deployment_name,
-                messages=messages,
-                temperature=0.1,
-                max_tokens=4000,
-                top_p=0.95
-            )
-            return response.choices[0].message.content
+            # First try with max_completion_tokens (newer models)
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.deployment_name,
+                    messages=messages,
+                    temperature=0.1,
+                    max_completion_tokens=4000,
+                    top_p=0.95
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                # If max_completion_tokens fails, try with max_tokens (older models)
+                if "max_completion_tokens" in str(e) or "unsupported_parameter" in str(e):
+                    response = self.client.chat.completions.create(
+                        model=self.deployment_name,
+                        messages=messages,
+                        temperature=0.1,
+                        max_tokens=4000,
+                        top_p=0.95
+                    )
+                    return response.choices[0].message.content
+                else:
+                    raise e
+                    
         except Exception as e:
             return f"⚠️ Azure AI Error: {str(e)}"
 
@@ -447,4 +463,5 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
+
 
