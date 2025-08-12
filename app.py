@@ -117,7 +117,7 @@ class AzureAIClient:
                 api_key=AZURE_OPENAI_KEY,
                 api_version=AZURE_OPENAI_VERSION
             )
-        self.deployment_name = "gpt-5-mini"
+        self.deployment_name = GPT5_DEPLOYMENT_NAME
         self.system_prompt = (
             "You are an elite legal AI assistant for ADR Chambers, specializing in arbitration, mediation, "
             "and dispute resolution. Always conclude with: "
@@ -447,3 +447,4 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
+
