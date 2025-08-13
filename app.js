@@ -6,10 +6,8 @@
   let isLoading = false;
 
   const analysisQueries = {
-    "contract-summary": "Provide a comprehensive summary of all contractual obligations, key terms, and critical provisions",
     "risk-assessment": "Identify and analyze all potential legal risks, liability exposures, and areas of concern",
     "dispute-clauses": "Extract and analyze all dispute resolution mechanisms, arbitration clauses, and mediation provisions",
-    "critical-dates": "Identify all important dates, deadlines, termination dates, and time-sensitive obligations",
     "ip-confidentiality": "Analyze intellectual property rights, confidentiality provisions, and proprietary information clauses",
     "financial-terms": "Review payment obligations, penalties, damages, and financial risk provisions",
     "termination-rights": "Analyze termination conditions, notice requirements, and post-termination obligations",
