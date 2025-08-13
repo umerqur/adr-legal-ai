@@ -67,12 +67,14 @@
     // Italic text
     formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
     
-    // Bullet points
-    formatted = formatted.replace(/^- (.*?)(<br>|$)/gm, '<li>$1</li>');
+    // Bullet points - only convert actual bullet lists (lines that start with "- " after line breaks)
+    formatted = formatted.replace(/(^|<br>)- ([^-].*?)(?=<br>|$)/gm, function(match, prefix, content) {
+      return prefix + '<li>' + content + '</li>';
+    });
     
     // Wrap consecutive list items in ul tags
-    formatted = formatted.replace(/(<li>.*?<\/li>(<br>)?)+/g, function(match) {
-      return '<ul>' + match.replace(/<br>/g, '') + '</ul>';
+    formatted = formatted.replace(/(<li>.*?<\/li>)+/g, function(match) {
+      return '<ul>' + match + '</ul>';
     });
     
     return formatted;
