@@ -20,34 +20,45 @@
     // Convert line breaks to HTML first
     formatted = formatted.replace(/\n/g, '<br>');
     
-    // Table detection - completely rewritten to handle various formats
-    // Look for any lines that have multiple | characters
-    formatted = formatted.replace(/(<br>.*?\|.*?\|.*?<br>)+/g, function(tableMatch) {
-      const lines = tableMatch.split('<br>').filter(line => {
-        const pipeCount = (line.match(/\|/g) || []).length;
-        return line.trim() && pipeCount >= 2;
+    // Table detection - handle both proper markdown AND weird formats
+    // First, try to find any content that looks like tabular data
+    formatted = formatted.replace(/(\|[^<]*?\|[^<]*?\|.*?(?=<br><br>|$))/gs, function(match) {
+      // Split into lines and filter for table-like content
+      const lines = match.split('<br>').filter(line => {
+        return line.trim() && line.includes('|') && line.split('|').length >= 3;
       });
       
-      if (lines.length < 2) return tableMatch;
+      if (lines.length < 2) return match;
       
+      // Build table HTML
       let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd; font-size: 0.9rem;">';
-      let headerProcessed = false;
+      let isFirstDataRow = true;
       
       lines.forEach((line, index) => {
-        // Skip lines that are just separators
-        if (line.includes('---') || line.includes('===')) return;
+        // Skip obvious separator lines
+        if (line.includes('---') || line.includes('===') || line.match(/^\s*\|\s*[-\s|]+\s*\|\s*$/)) {
+          return;
+        }
         
-        // Split by | and clean up cells
-        let cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+        // Parse cells - split by | and clean
+        let cells = line.split('|')
+          .map(cell => cell.trim())
+          .filter(cell => cell && cell !== '---');
         
-        // Skip if we don't have enough cells
         if (cells.length < 2) return;
         
-        const isHeader = !headerProcessed;
+        // Determine if this should be a header row
+        const isHeader = isFirstDataRow && (
+          cells.some(cell => cell.toLowerCase().includes('feature') || 
+                           cell.toLowerCase().includes('type') || 
+                           cell.toLowerCase().includes('aspect') ||
+                           cell.toLowerCase().includes('nda'))
+        );
+        
         const tag = isHeader ? 'th' : 'td';
         const style = isHeader ? 
           'style="background: #8B1538; color: white; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
-          'style="padding: 0.75rem; border: 1px solid #ddd; vertical-align: top;"';
+          'style="padding: 0.75rem; border: 1px solid #ddd; vertical-align: top; line-height: 1.4;"';
         
         tableHtml += '<tr>';
         cells.forEach(cell => {
@@ -55,11 +66,13 @@
         });
         tableHtml += '</tr>';
         
-        if (isHeader) headerProcessed = true;
+        isFirstDataRow = false;
       });
       
       tableHtml += '</table>';
-      return tableHtml;
+      
+      // Only return table if we actually created rows
+      return tableHtml.includes('<tr>') ? tableHtml : match;
     });
     
     // Headers
