@@ -19,8 +19,39 @@
   function formatMarkdown(text) {
     let formatted = text || "";
     
-    // Convert line breaks to HTML first
+    // Handle tables first (before converting line breaks)
+    const tableRegex = /(\|.*\|.*<br>)+/g;
     formatted = formatted.replace(/\n/g, '<br>');
+    
+    // Process tables
+    formatted = formatted.replace(tableRegex, function(tableMatch) {
+      const rows = tableMatch.split('<br>').filter(row => row.trim() && row.includes('|'));
+      if (rows.length < 2) return tableMatch;
+      
+      let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd;">';
+      
+      rows.forEach((row, index) => {
+        const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
+        if (cells.length === 0) return;
+        
+        const isHeader = index === 0 || (index === 1 && row.includes('---'));
+        if (index === 1 && row.includes('---')) return; // Skip separator row
+        
+        const tag = isHeader ? 'th' : 'td';
+        const style = isHeader ? 
+          'style="background: #f8f9fa; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
+          'style="padding: 0.75rem; border: 1px solid #ddd;"';
+        
+        tableHtml += '<tr>';
+        cells.forEach(cell => {
+          tableHtml += `<${tag} ${style}>${cell}</${tag}>`;
+        });
+        tableHtml += '</tr>';
+      });
+      
+      tableHtml += '</table>';
+      return tableHtml;
+    });
     
     // Headers
     formatted = formatted.replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>');
