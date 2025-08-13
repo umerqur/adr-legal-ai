@@ -20,80 +20,36 @@
     // Convert line breaks to HTML first
     formatted = formatted.replace(/\n/g, '<br>');
     
-    // Table detection - handle both proper markdown AND weird formats
-    // First, try to find any content that looks like tabular data
-    formatted = formatted.replace(/(\|[^<]*?\|[^<]*?\|.*?(?=<br><br>|$))/gs, function(match) {
-      // Split into lines and filter for table-like content
-      const lines = match.split('<br>').filter(line => {
-        return line.trim() && line.includes('|') && line.split('|').length >= 3;
-      });
+    // Headers - only convert clear header patterns
+    formatted = formatted.replace(/(^|<br>)### ([^<]+?)(<br>|$)/g, '$1<h3 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.2rem;">$2</h3>$3');
+    formatted = formatted.replace(/(^|<br>)## ([^<]+?)(<br>|$)/g, '$1<h2 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.4rem;">$2</h2>$3');
+    formatted = formatted.replace(/(^|<br>)# ([^<]+?)(<br>|$)/g, '$1<h1 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.6rem;">$2</h1>$3');
+    
+    // Bold text - more conservative approach
+    formatted = formatted.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+    
+    // Italic text - conservative
+    formatted = formatted.replace(/\*([^*\s][^*]*?[^*\s])\*/g, '<em>$1</em>');
+    
+    // Bullet points - only convert actual intentional lists using flexbox
+    const bulletPattern = /((?:(?:^|<br>)- [^<\n]+?(?=<br>|$))+)/gm;
+    formatted = formatted.replace(bulletPattern, function(listMatch) {
+      const items = listMatch.split(/<br>/).filter(item => item.trim().startsWith('- '));
+      if (items.length < 2) return listMatch; // Don't convert single items
       
-      if (lines.length < 2) return match;
-      
-      // Build table HTML
-      let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd; font-size: 0.9rem;">';
-      let isFirstDataRow = true;
-      
-      lines.forEach((line, index) => {
-        // Skip obvious separator lines
-        if (line.includes('---') || line.includes('===') || line.match(/^\s*\|\s*[-\s|]+\s*\|\s*$/)) {
-          return;
+      let listHtml = '<div style="margin: 0.5rem 0;">';
+      items.forEach(item => {
+        const content = item.replace(/^- /, '').trim();
+        if (content) {
+          listHtml += `<div style="display: flex; margin: 0.25rem 0; line-height: 1.5;">
+            <span style="margin-right: 0.5rem; flex-shrink: 0;">•</span>
+            <span style="flex: 1;">${content}</span>
+          </div>`;
         }
-        
-        // Parse cells - split by | and clean
-        let cells = line.split('|')
-          .map(cell => cell.trim())
-          .filter(cell => cell && cell !== '---');
-        
-        if (cells.length < 2) return;
-        
-        // Determine if this should be a header row
-        const isHeader = isFirstDataRow && (
-          cells.some(cell => cell.toLowerCase().includes('feature') || 
-                           cell.toLowerCase().includes('type') || 
-                           cell.toLowerCase().includes('aspect') ||
-                           cell.toLowerCase().includes('nda'))
-        );
-        
-        const tag = isHeader ? 'th' : 'td';
-        const style = isHeader ? 
-          'style="background: #8B1538; color: white; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
-          'style="padding: 0.75rem; border: 1px solid #ddd; vertical-align: top; line-height: 1.4;"';
-        
-        tableHtml += '<tr>';
-        cells.forEach(cell => {
-          tableHtml += `<${tag} ${style}>${cell}</${tag}>`;
-        });
-        tableHtml += '</tr>';
-        
-        isFirstDataRow = false;
       });
+      listHtml += '</div>';
       
-      tableHtml += '</table>';
-      
-      // Only return table if we actually created rows
-      return tableHtml.includes('<tr>') ? tableHtml : match;
-    });
-    
-    // Headers
-    formatted = formatted.replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>');
-    formatted = formatted.replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>');
-    formatted = formatted.replace(/# (.*?)(<br>|$)/g, '<h1>$1</h1>');
-    
-    // Bold text
-    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    
-    // Italic text
-    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    
-    // Bullet points - only convert actual bullet lists (lines that start with "- " after line breaks)
-    formatted = formatted.replace(/(^|<br>)- ([^-].*?)(?=<br>|$)/gm, function(match, prefix, content) {
-      return prefix + '<li>' + content + '</li>';
-    });
-    
-    // Wrap consecutive list items in ul tags
-    formatted = formatted.replace(/(<li>.*?<\/li>)+/g, function(match) {
-      return '<ul>' + match + '</ul>';
+      return listMatch.replace(bulletPattern, listHtml);
     });
     
     return formatted;
