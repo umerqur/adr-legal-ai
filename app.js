@@ -112,6 +112,11 @@
       addMessage("system", "Successfully processed " + successCount + " document" + (successCount !== 1 ? "s" : ""));
 
       await loadDocumentSummary();
+      
+      // Show quick analysis modal after successful upload
+      if (successCount > 0) {
+        showQuickAnalysisModal();
+      }
     } catch (err) {
       console.error("Upload error:", err);
       addMessage("system", "Error uploading documents. Please try again.");
@@ -190,11 +195,194 @@
     }
   }
 
-  // Make quickAnalysis available to buttons in HTML
+  function showQuickAnalysisModal() {
+    // Create modal backdrop
+    const modalBackdrop = document.createElement("div");
+    modalBackdrop.id = "quickAnalysisModal";
+    modalBackdrop.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(3px);
+    `;
+
+    // Create modal content
+    const modalContent = document.createElement("div");
+    modalContent.style.cssText = `
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease-out;
+    `;
+
+    modalContent.innerHTML = `
+      <style>
+        @keyframes modalSlideIn {
+          from { transform: translateY(-50px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+          text-align: center;
+          margin-bottom: 1.5rem;
+          border-bottom: 2px solid #8B1538;
+          padding-bottom: 1rem;
+        }
+        .modal-title {
+          font-size: 1.8rem;
+          color: #8B1538;
+          margin: 0;
+          font-weight: 700;
+        }
+        .modal-subtitle {
+          color: #666;
+          margin: 0.5rem 0 0 0;
+          font-size: 1rem;
+        }
+        .analysis-grid-modal {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+          margin: 1.5rem 0;
+        }
+        .analysis-button-modal {
+          padding: 1rem;
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+          border: 2px solid #e5e5e5;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          color: #333;
+          transition: all 0.3s ease;
+          text-align: center;
+          font-size: 0.95rem;
+          line-height: 1.3;
+        }
+        .analysis-button-modal:hover {
+          border-color: #8B1538;
+          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
+          color: white;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(139, 21, 56, 0.3);
+        }
+        .modal-actions {
+          display: flex;
+          gap: 1rem;
+          margin-top: 2rem;
+          justify-content: center;
+        }
+        .modal-close-btn {
+          padding: 0.75rem 2rem;
+          background: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .modal-close-btn:hover {
+          background: #5a6268;
+        }
+        .modal-skip-btn {
+          padding: 0.75rem 2rem;
+          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
+          color: white;
+          border: none;
+          border-radius: 25px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .modal-skip-btn:hover {
+          background: linear-gradient(135deg, #A91B47 0%, #C41E3A 100%);
+        }
+        @media(max-width: 768px) {
+          .analysis-grid-modal {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+      
+      <div class="modal-header">
+        <h2 class="modal-title">🎯 Quick Legal Analysis</h2>
+        <p class="modal-subtitle">Choose an analysis to run on your uploaded documents</p>
+      </div>
+      
+      <div class="analysis-grid-modal">
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('risk-assessment')">
+          ⚠️ Risk Assessment<br><small>Identify potential legal risks & liability exposures</small>
+        </button>
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('dispute-clauses')">
+          ⚖️ Dispute Clauses<br><small>Analyze arbitration & mediation provisions</small>
+        </button>
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('ip-confidentiality')">
+          🔒 IP & Confidentiality<br><small>Review intellectual property & privacy terms</small>
+        </button>
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('financial-terms')">
+          💰 Financial Terms<br><small>Examine payment obligations & penalties</small>
+        </button>
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('termination-rights')">
+          📋 Termination Rights<br><small>Analyze termination conditions & obligations</small>
+        </button>
+        <button class="analysis-button-modal" onclick="runQuickAnalysis('jurisdiction-law')">
+          🌍 Jurisdiction & Law<br><small>Identify governing law & jurisdiction clauses</small>
+        </button>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="modal-close-btn" onclick="closeQuickAnalysisModal()">Skip for Now</button>
+        <button class="modal-skip-btn" onclick="closeQuickAnalysisModal()">I'll Ask Manually</button>
+      </div>
+    `;
+
+    modalBackdrop.appendChild(modalContent);
+    document.body.appendChild(modalBackdrop);
+
+    // Close modal when clicking backdrop
+    modalBackdrop.addEventListener("click", function(e) {
+      if (e.target === modalBackdrop) {
+        closeQuickAnalysisModal();
+      }
+    });
+  }
+
+  function closeQuickAnalysisModal() {
+    const modal = document.getElementById("quickAnalysisModal");
+    if (modal) {
+      modal.style.animation = "modalSlideOut 0.2s ease-in";
+      setTimeout(() => {
+        document.body.removeChild(modal);
+      }, 200);
+    }
+  }
+
+  // Make quickAnalysis available to buttons in HTML (for sidebar)
   window.quickAnalysis = function (type) {
     const query = analysisQueries[type];
     if (query) sendMessage(query);
   };
+
+  // Add CSS for modal slide out animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes modalSlideOut {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-50px); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
 
   // Init
   document.addEventListener("DOMContentLoaded", function () {
