@@ -303,7 +303,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 @media(max-width:768px){
   *{box-sizing:border-box}
   body{overflow-x:hidden}
-  .contact-info{text-align:center;padding:0 1rem}
+  .contact-info{flex-direction:column;text-align:center;padding:0 1rem;gap:0.5rem}
   .contact-info span{justify-content:center;font-size:0.8rem}
   .main-layout{flex-direction:column;padding:1rem;gap:1rem}
   .sidebar{width:100%;order:2}
