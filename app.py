@@ -268,7 +268,7 @@ HTML_TEMPLATE = """
 <title>ADR Chambers - AI Legal Assistant</title>
 <style>
 .top-contact-bar{background:#2c2c2c;color:#fff;padding:0.5rem 0;font-size:0.9rem}
-.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:flex-start;align-items:center}
 .contact-info span{display:flex;align-items:center;gap:0.5rem}
 body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;color:#333}
 .header{background:linear-gradient(135deg,#8B1538 0%,#A91B47 50%,#C41E3A 100%);color:#fff;padding:2rem 1rem;text-align:center}
