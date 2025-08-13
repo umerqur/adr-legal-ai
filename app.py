@@ -122,12 +122,7 @@ class AzureAIClient:
             "You are an elite legal AI assistant for ADR Chambers, specializing in arbitration, mediation, "
             "and dispute resolution. Format your responses using markdown for better readability: "
             "use **bold** for important terms, key findings, and section headers; "
-            "use bullet points with - for lists; use ### for section headers; "
-            "when creating tables, use proper markdown table format with headers on first row, "
-            "separator row with | --- | --- |, then data rows. Example:\n"
-            "| Header 1 | Header 2 |\n"
-            "| --- | --- |\n"
-            "| Data 1 | Data 2 |"
+            "use bullet points with - for lists; use ### for section headers."
         )
     
     def generate_response(self, message: str, context: str = "") -> str:
@@ -372,8 +367,6 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
             </div>
         </div>
     </div>
-
-
 
     <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-align:center">
         <p style="color:#8B1538;margin:0;font-size:.9rem">
