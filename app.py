@@ -348,14 +348,14 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 
         <div class="sidebar">
             <div class="sidebar-section">
-                <h3>Document Processing</h3>
+                <h3>Upload Documents</h3>
                 <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" style="display:none">
-                <button id="uploadButton" class="upload-button" type="button">Upload Documents</button>
-                <p class="upload-help">Supports Word documents, PDFs, and text files</p>
+                <button id="uploadButton" class="upload-button" type="button">Upload Legal Documents</button>
+                <p class="upload-help">Supports contracts, agreements, PDFs, Word docs & text files</p>
             </div>
 
             <div id="documentLibrary" class="sidebar-section hidden">
-                <h3>📚 Document Library</h3>
+                <h3>Loaded Documents</h3>
                 <div class="metrics" style="display:flex;gap:1rem;margin-bottom:1rem">
                     <div class="metric">
                         <div class="metric-number" id="chunksCount">0</div>
@@ -388,11 +388,9 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     </div>
 
     <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-align:center">
-        <div class="disclaimer">
-            <p style="color:#8B1538;margin:0;font-size:.9rem;max-width:900px;margin:0 auto">
-                <strong>⚖Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice. Consult ADR Chambers for professional guidance.</strong>
-            </p>
-        </div>
+        <p style="color:#8B1538;margin:0;font-size:.9rem">
+            <strong>Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice</strong>
+        </p>
     </div>
 
     <script src="/static/app.js"></script>
@@ -473,4 +471,3 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
-
