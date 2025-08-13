@@ -123,11 +123,11 @@ class AzureAIClient:
             "and dispute resolution. Format your responses using markdown for better readability: "
             "use **bold** for important terms, key findings, and section headers; "
             "use bullet points with - for lists; use ### for section headers; "
-            "use proper markdown tables with | pipes when comparing information or creating structured data. "
-            "For tables, use format: | Header 1 | Header 2 | and separate with | --- | --- |. "
-            "Always conclude with: "
-            "\"This analysis is for informational purposes only and does not constitute legal advice. "
-            "Consult with ADR Chambers legal professionals for specific guidance.\""
+            "when creating tables, use proper markdown table format with headers on first row, "
+            "separator row with | --- | --- |, then data rows. Example:\n"
+            "| Header 1 | Header 2 |\n"
+            "| --- | --- |\n"
+            "| Data 1 | Data 2 |"
         )
     
     def generate_response(self, message: str, context: str = "") -> str:
