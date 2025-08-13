@@ -1,175 +1,4 @@
-function showQuickAnalysisModal() {
-    // Create modal backdrop
-    const modalBackdrop = document.createElement("div");
-    modalBackdrop.id = "quickAnalysisModal";
-    modalBackdrop.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(3px);
-    `;
-
-    // Create modal content
-    const modalContent = document.createElement("div");
-    modalContent.style.cssText = `
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 600px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      animation: modalSlideIn 0.3s ease-out;
-    `;
-
-    modalContent.innerHTML = `
-      <style>
-        @keyframes modalSlideIn {
-          from { transform: translateY(-50px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-header {
-          text-align: center;
-          margin-bottom: 1.5rem;
-          border-bottom: 2px solid #8B1538;
-          padding-bottom: 1rem;
-        }
-        .modal-title {
-          font-size: 1.8rem;
-          color: #8B1538;
-          margin: 0;
-          font-weight: 700;
-        }
-        .modal-subtitle {
-          color: #666;
-          margin: 0.5rem 0 0 0;
-          font-size: 1rem;
-        }
-        .analysis-grid-modal {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          margin: 1.5rem 0;
-        }
-        .analysis-button-modal {
-          padding: 1rem;
-          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-          border: 2px solid #e5e5e5;
-          border-radius: 12px;
-          font-weight: 600;
-          cursor: pointer;
-          color: #333;
-          transition: all 0.3s ease;
-          text-align: center;
-          font-size: 0.95rem;
-          line-height: 1.3;
-        }
-        .analysis-button-modal:hover {
-          border-color: #8B1538;
-          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(139, 21, 56, 0.3);
-        }
-        .modal-actions {
-          display: flex;
-          gap: 1rem;
-          margin-top: 2rem;
-          justify-content: center;
-        }
-        .modal-close-btn {
-          padding: 0.75rem 2rem;
-          background: #6c757d;
-          color: white;
-          border: none;
-          border-radius: 25px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .modal-close-btn:hover {
-          background: #5a6268;
-        }
-        .modal-skip-btn {
-          padding: 0.75rem 2rem;
-          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
-          color: white;
-          border: none;
-          border-radius: 25px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .modal-skip-btn:hover {
-          background: linear-gradient(135deg, #A91B47 0%, #C41E3A 100%);
-        }
-        @media(max-width: 768px) {
-          .analysis-grid-modal {
-            grid-template-columns: 1fr;
-          }
-        }
-      </style>
-      
-      <div class="modal-header">
-        <h2 class="modal-title">🎯 Quick Legal Analysis</h2>
-        <p class="modal-subtitle">Choose an analysis to run on your uploaded documents</p>
-      </div>
-      
-      <div class="analysis-grid-modal">
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('risk-assessment')">
-          ⚠️ Risk Assessment<br><small>Identify potential legal risks & liability exposures</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('dispute-clauses')">
-          ⚖️ Dispute Clauses<br><small>Analyze arbitration & mediation provisions</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('ip-confidentiality')">
-          🔒 IP & Confidentiality<br><small>Review intellectual property & privacy terms</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('financial-terms')">
-          💰 Financial Terms<br><small>Examine payment obligations & penalties</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('termination-rights')">
-          📋 Termination Rights<br><small>Analyze termination conditions & obligations</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('jurisdiction-law')">
-          🌍 Jurisdiction & Law<br><small>Identify governing law & jurisdiction clauses</small>
-        </button>
-      </div>
-      
-      <div class="modal-actions">
-        <button class="modal-close-btn" onclick="closeQuickAnalysisModal()">Skip for Now</button>
-        <button class="modal-skip-btn" onclick="closeQuickAnalysisModal()">I'll Ask Manually</button>
-      </div>
-    `;
-
-    modalBackdrop.appendChild(modalContent);
-    document.body.appendChild(modalBackdrop);
-
-    // Close modal when clicking backdrop
-    modalBackdrop.addEventListener("click", function(e) {
-      if (e.target === modalBackdrop) {
-        closeQuickAnalysisModal();
-      }
-    });
-  }
-
-  function closeQuickAnalysisModal() {
-    const modal = document.getElementById("quickAnalysisModal");
-    if (modal) {
-      modal.style.animation = "modalSlideOut 0.2s ease-in";
-      setTimeout(() => {
-        document.body.removeChild(modal);
-      }, 200);
-    }
-  }/* static/app.js */
+/* static/app.js */
 "use strict";
 
 (function () {
@@ -191,36 +20,67 @@ function showQuickAnalysisModal() {
     // Convert line breaks to HTML first
     formatted = formatted.replace(/\n/g, '<br>');
     
-    // Headers - only convert clear header patterns
-    formatted = formatted.replace(/(^|<br>)### ([^<]+?)(<br>|$)/g, '$1<h3 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.2rem;">$2</h3>$3');
-    formatted = formatted.replace(/(^|<br>)## ([^<]+?)(<br>|$)/g, '$1<h2 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.4rem;">$2</h2>$3');
-    formatted = formatted.replace(/(^|<br>)# ([^<]+?)(<br>|$)/g, '$1<h1 style="margin: 1.5rem 0 0.5rem 0; color: #333; font-size: 1.6rem;">$2</h1>$3');
-    
-    // Bold text - more conservative approach
-    formatted = formatted.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
-    
-    // Italic text - conservative
-    formatted = formatted.replace(/\*([^*\s][^*]*?[^*\s])\*/g, '<em>$1</em>');
-    
-    // Bullet points - only convert actual intentional lists using flexbox
-    const bulletPattern = /((?:(?:^|<br>)- [^<\n]+?(?=<br>|$))+)/gm;
-    formatted = formatted.replace(bulletPattern, function(listMatch) {
-      const items = listMatch.split(/<br>/).filter(item => item.trim().startsWith('- '));
-      if (items.length < 2) return listMatch; // Don't convert single items
-      
-      let listHtml = '<div style="margin: 0.5rem 0;">';
-      items.forEach(item => {
-        const content = item.replace(/^- /, '').trim();
-        if (content) {
-          listHtml += `<div style="display: flex; margin: 0.25rem 0; line-height: 1.5;">
-            <span style="margin-right: 0.5rem; flex-shrink: 0;">•</span>
-            <span style="flex: 1;">${content}</span>
-          </div>`;
-        }
+    // Table detection - completely rewritten to handle various formats
+    // Look for any lines that have multiple | characters
+    formatted = formatted.replace(/(<br>.*?\|.*?\|.*?<br>)+/g, function(tableMatch) {
+      const lines = tableMatch.split('<br>').filter(line => {
+        const pipeCount = (line.match(/\|/g) || []).length;
+        return line.trim() && pipeCount >= 2;
       });
-      listHtml += '</div>';
       
-      return listMatch.replace(bulletPattern, listHtml);
+      if (lines.length < 2) return tableMatch;
+      
+      let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd; font-size: 0.9rem;">';
+      let headerProcessed = false;
+      
+      lines.forEach((line, index) => {
+        // Skip lines that are just separators
+        if (line.includes('---') || line.includes('===')) return;
+        
+        // Split by | and clean up cells
+        let cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+        
+        // Skip if we don't have enough cells
+        if (cells.length < 2) return;
+        
+        const isHeader = !headerProcessed;
+        const tag = isHeader ? 'th' : 'td';
+        const style = isHeader ? 
+          'style="background: #8B1538; color: white; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
+          'style="padding: 0.75rem; border: 1px solid #ddd; vertical-align: top;"';
+        
+        tableHtml += '<tr>';
+        cells.forEach(cell => {
+          tableHtml += `<${tag} ${style}>${cell}</${tag}>`;
+        });
+        tableHtml += '</tr>';
+        
+        if (isHeader) headerProcessed = true;
+      });
+      
+      tableHtml += '</table>';
+      return tableHtml;
+    });
+    
+    // Headers
+    formatted = formatted.replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>');
+    formatted = formatted.replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>');
+    formatted = formatted.replace(/# (.*?)(<br>|$)/g, '<h1>$1</h1>');
+    
+    // Bold text
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Italic text
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Bullet points - only convert actual bullet lists (lines that start with "- " after line breaks)
+    formatted = formatted.replace(/(^|<br>)- ([^-].*?)(?=<br>|$)/gm, function(match, prefix, content) {
+      return prefix + '<li>' + content + '</li>';
+    });
+    
+    // Wrap consecutive list items in ul tags
+    formatted = formatted.replace(/(<li>.*?<\/li>)+/g, function(match) {
+      return '<ul>' + match + '</ul>';
     });
     
     return formatted;
@@ -336,26 +196,25 @@ function showQuickAnalysisModal() {
       const summary = await response.json();
 
       documentCount = summary.total_chunks || 0;
-      
-      // Show Quick Analysis in sidebar when documents are loaded
+      document.getElementById("chunksCount").textContent = summary.total_chunks || 0;
+      document.getElementById("filesCount").textContent = (summary.unique_files || []).length;
+
+      const filesList = document.getElementById("filesList");
+      filesList.innerHTML = "<strong>Loaded Documents:</strong>";
+      (summary.unique_files || []).forEach(name => {
+        const div = document.createElement("div");
+        div.textContent = name;
+        filesList.appendChild(div);
+      });
+
+      const documentLibrary = document.getElementById("documentLibrary");
       const quickAnalysis = document.getElementById("quickAnalysis");
       if (documentCount > 0) {
+        documentLibrary.classList.remove("hidden");
         quickAnalysis.classList.remove("hidden");
-        
-        // Add attention-grabbing animation
-        quickAnalysis.style.animation = "quickAnalysisAppear 0.6s ease-out";
-        quickAnalysis.style.border = "3px solid #8B1538";
-        quickAnalysis.style.boxShadow = "0 8px 25px rgba(139, 21, 56, 0.2)";
-        
-        // Add a subtle pulse effect
-        setTimeout(() => {
-          quickAnalysis.style.animation = "quickAnalysisPulse 2s ease-in-out infinite";
-        }, 600);
-        
-        console.log("Showing quick analysis - document count:", documentCount);
       } else {
+        documentLibrary.classList.add("hidden");
         quickAnalysis.classList.add("hidden");
-        console.log("Hiding quick analysis - no documents");
       }
     } catch (err) {
       console.error("Error loading document summary:", err);
@@ -372,209 +231,11 @@ function showQuickAnalysisModal() {
     }
   }
 
-  function showQuickAnalysisModal() {
-    // Create modal backdrop
-    const modalBackdrop = document.createElement("div");
-    modalBackdrop.id = "quickAnalysisModal";
-    modalBackdrop.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(3px);
-    `;
-
-    // Create modal content
-    const modalContent = document.createElement("div");
-    modalContent.style.cssText = `
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 600px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      animation: modalSlideIn 0.3s ease-out;
-    `;
-
-    modalContent.innerHTML = `
-      <style>
-        @keyframes modalSlideIn {
-          from { transform: translateY(-50px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-header {
-          text-align: center;
-          margin-bottom: 1.5rem;
-          border-bottom: 2px solid #8B1538;
-          padding-bottom: 1rem;
-        }
-        .modal-title {
-          font-size: 1.8rem;
-          color: #8B1538;
-          margin: 0;
-          font-weight: 700;
-        }
-        .modal-subtitle {
-          color: #666;
-          margin: 0.5rem 0 0 0;
-          font-size: 1rem;
-        }
-        .analysis-grid-modal {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          margin: 1.5rem 0;
-        }
-        .analysis-button-modal {
-          padding: 1rem;
-          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-          border: 2px solid #e5e5e5;
-          border-radius: 12px;
-          font-weight: 600;
-          cursor: pointer;
-          color: #333;
-          transition: all 0.3s ease;
-          text-align: center;
-          font-size: 0.95rem;
-          line-height: 1.3;
-        }
-        .analysis-button-modal:hover {
-          border-color: #8B1538;
-          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(139, 21, 56, 0.3);
-        }
-        .modal-actions {
-          display: flex;
-          gap: 1rem;
-          margin-top: 2rem;
-          justify-content: center;
-        }
-        .modal-close-btn {
-          padding: 0.75rem 2rem;
-          background: #6c757d;
-          color: white;
-          border: none;
-          border-radius: 25px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .modal-close-btn:hover {
-          background: #5a6268;
-        }
-        .modal-skip-btn {
-          padding: 0.75rem 2rem;
-          background: linear-gradient(135deg, #8B1538 0%, #A91B47 100%);
-          color: white;
-          border: none;
-          border-radius: 25px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .modal-skip-btn:hover {
-          background: linear-gradient(135deg, #A91B47 0%, #C41E3A 100%);
-        }
-        @media(max-width: 768px) {
-          .analysis-grid-modal {
-            grid-template-columns: 1fr;
-          }
-        }
-      </style>
-      
-      <div class="modal-header">
-        <h2 class="modal-title">🎯 Quick Legal Analysis</h2>
-        <p class="modal-subtitle">Choose an analysis to run on your uploaded documents</p>
-      </div>
-      
-      <div class="analysis-grid-modal">
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('risk-assessment')">
-          ⚠️ Risk Assessment<br><small>Identify potential legal risks & liability exposures</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('dispute-clauses')">
-          ⚖️ Dispute Clauses<br><small>Analyze arbitration & mediation provisions</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('ip-confidentiality')">
-          🔒 IP & Confidentiality<br><small>Review intellectual property & privacy terms</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('financial-terms')">
-          💰 Financial Terms<br><small>Examine payment obligations & penalties</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('termination-rights')">
-          📋 Termination Rights<br><small>Analyze termination conditions & obligations</small>
-        </button>
-        <button class="analysis-button-modal" onclick="runQuickAnalysis('jurisdiction-law')">
-          🌍 Jurisdiction & Law<br><small>Identify governing law & jurisdiction clauses</small>
-        </button>
-      </div>
-      
-      <div class="modal-actions">
-        <button class="modal-close-btn" onclick="closeQuickAnalysisModal()">Skip for Now</button>
-        <button class="modal-skip-btn" onclick="closeQuickAnalysisModal()">I'll Ask Manually</button>
-      </div>
-    `;
-
-    modalBackdrop.appendChild(modalContent);
-    document.body.appendChild(modalBackdrop);
-
-    // Close modal when clicking backdrop
-    modalBackdrop.addEventListener("click", function(e) {
-      if (e.target === modalBackdrop) {
-        closeQuickAnalysisModal();
-      }
-    });
-  }
-
-  function closeQuickAnalysisModal() {
-    const modal = document.getElementById("quickAnalysisModal");
-    if (modal) {
-      modal.style.animation = "modalSlideOut 0.2s ease-in";
-      setTimeout(() => {
-        document.body.removeChild(modal);
-      }, 200);
-    }
-  }
-
   // Make quickAnalysis available to buttons in HTML
   window.quickAnalysis = function (type) {
     const query = analysisQueries[type];
     if (query) sendMessage(query);
   };
-
-  // Add CSS animations for Quick Analysis section
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes quickAnalysisAppear {
-      from { 
-        transform: translateX(20px); 
-        opacity: 0; 
-      }
-      to { 
-        transform: translateX(0); 
-        opacity: 1; 
-      }
-    }
-    
-    @keyframes quickAnalysisPulse {
-      0%, 100% { 
-        box-shadow: 0 8px 25px rgba(139, 21, 56, 0.2); 
-      }
-      50% { 
-        box-shadow: 0 12px 35px rgba(139, 21, 56, 0.35); 
-      }
-    }
-  `;
-  document.head.appendChild(style);
 
   // Init
   document.addEventListener("DOMContentLoaded", function () {
