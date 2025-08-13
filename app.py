@@ -323,7 +323,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     <div class="top-contact-bar">
         <div class="contact-info">
             <span>📞 1-800-856-5154</span>
-            <span>✉️ adr@adrchambers.com</span>
+            <span>ADR@ADRCHAMBERS.COM</span>
         </div>
     </div>
 
