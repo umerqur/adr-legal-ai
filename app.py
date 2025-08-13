@@ -298,7 +298,21 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 .analysis-button{padding:1rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538}
 .hidden{display:none}
 .loading{opacity:.7;font-style:italic}
-@media(max-width:768px){.main-layout{flex-direction:column;padding:1rem}.sidebar{width:100%}.analysis-grid{grid-template-columns:1fr}}
+@media(max-width:768px){
+  *{box-sizing:border-box}
+  body{overflow-x:hidden}
+  .main-layout{flex-direction:column;padding:1rem;gap:1rem}
+  .sidebar{width:100%;order:2}
+  .chat-section{order:1;min-height:60vh}
+  .messages-container{max-height:50vh;min-height:300px}
+  .input-container{gap:0.5rem}
+  .message-input{flex:1;min-width:0;font-size:16px;padding:0.8rem 1rem}
+  .send-button{flex-shrink:0;min-width:70px;padding:0.8rem 1.5rem}
+  .header h1{font-size:2rem}
+  .status-badge{padding:0.5rem 1rem;font-size:0.8rem}
+  .message-content{max-width:90%;padding:0.8rem 1rem;font-size:0.9rem}
+  .analysis-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -447,6 +461,7 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
+
 
 
 
