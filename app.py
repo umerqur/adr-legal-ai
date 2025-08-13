@@ -268,7 +268,7 @@ HTML_TEMPLATE = """
 <title>ADR Chambers - AI Legal Assistant</title>
 <style>
 .top-contact-bar{background:#2c2c2c;color:#fff;padding:0.5rem 0;font-size:0.9rem}
-.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:flex-start;align-items:center}
 .contact-info span{display:flex;align-items:center;gap:0.5rem}
 body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;color:#333}
 .header{background:linear-gradient(135deg,#8B1538 0%,#A91B47 50%,#C41E3A 100%);color:#fff;padding:2rem 1rem;text-align:center}
@@ -376,11 +376,22 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
         </div>
     </div>
 
-    <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-align:center">
-        <p style="color:#8B1538;margin:0;font-size:.9rem">
-            <strong>Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice</strong>
-        </p>
+    <div id="quickAnalysis" class="quick-analysis hidden">
+        <h3>⚡ Quick Legal Analysis</h3>
+        <p>Click any button to run instant analysis on your documents</p>
+        <div class="analysis-grid">
+            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">📋 Contract Summary</button>
+            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">⚠️ Risk Assessment</button>
+            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">🔍 Dispute Clauses</button>
+            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">📅 Critical Dates</button>
+            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">🛡️ IP & Confidentiality</button>
+            <button class="analysis-button" onclick="quickAnalysis('financial-terms')">💰 Financial Terms</button>
+            <button class="analysis-button" onclick="quickAnalysis('termination-rights')">🚪 Termination Rights</button>
+            <button class="analysis-button" onclick="quickAnalysis('jurisdiction-law')">🌍 Jurisdiction & Law</button>
+        </div>
     </div>
+
+    <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-
 
     <script src="/static/app.js"></script>
 </body>
