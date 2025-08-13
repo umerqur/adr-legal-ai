@@ -20,26 +20,34 @@
     // Convert line breaks to HTML first
     formatted = formatted.replace(/\n/g, '<br>');
     
-    // Better table detection - look for lines with multiple pipes
-    const tablePattern = /((?:\|[^|]*\|[^|]*\|.*?<br>)+)/g;
-    formatted = formatted.replace(tablePattern, function(tableMatch) {
-      const lines = tableMatch.split('<br>').filter(line => line.trim() && line.includes('|'));
+    // Table detection - completely rewritten to handle various formats
+    // Look for any lines that have multiple | characters
+    formatted = formatted.replace(/(<br>.*?\|.*?\|.*?<br>)+/g, function(tableMatch) {
+      const lines = tableMatch.split('<br>').filter(line => {
+        const pipeCount = (line.match(/\|/g) || []).length;
+        return line.trim() && pipeCount >= 2;
+      });
+      
       if (lines.length < 2) return tableMatch;
       
-      let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd;">';
-      let isFirstRow = true;
+      let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd; font-size: 0.9rem;">';
+      let headerProcessed = false;
       
       lines.forEach((line, index) => {
-        // Skip separator rows (--- rows)
-        if (line.includes('---')) return;
+        // Skip lines that are just separators
+        if (line.includes('---') || line.includes('===')) return;
         
-        const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+        // Split by | and clean up cells
+        let cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+        
+        // Skip if we don't have enough cells
         if (cells.length < 2) return;
         
-        const tag = isFirstRow ? 'th' : 'td';
-        const style = isFirstRow ? 
-          'style="background: #f8f9fa; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
-          'style="padding: 0.75rem; border: 1px solid #ddd;"';
+        const isHeader = !headerProcessed;
+        const tag = isHeader ? 'th' : 'td';
+        const style = isHeader ? 
+          'style="background: #8B1538; color: white; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
+          'style="padding: 0.75rem; border: 1px solid #ddd; vertical-align: top;"';
         
         tableHtml += '<tr>';
         cells.forEach(cell => {
@@ -47,7 +55,7 @@
         });
         tableHtml += '</tr>';
         
-        isFirstRow = false;
+        if (isHeader) headerProcessed = true;
       });
       
       tableHtml += '</table>';
