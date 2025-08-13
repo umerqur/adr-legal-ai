@@ -129,7 +129,7 @@
       const results = await response.json();
 
       const successCount = results.filter(r => r.status === "success").length;
-      addMessage("system", "Successfully processed " + successCount + " documents");
+      addMessage("system", "Successfully processed " + successCount + " document" + (successCount !== 1 ? "s" : ""));
 
       await loadDocumentSummary();
     } catch (err) {
