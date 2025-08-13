@@ -297,7 +297,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 .metric{flex:1;text-align:center;padding:1rem;background:#f8f9fa;border-radius:10px;border-top:3px solid #8B1538}
 .quick-analysis{background:#fff;margin:2rem;padding:2rem;border-radius:15px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
 .analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.analysis-button{padding:1rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538}
+.analysis-button{padding:0.7rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538;font-size:0.9rem}
 .hidden{display:none}
 .loading{opacity:.7;font-style:italic}
 @media(max-width:768px){
@@ -362,17 +362,14 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     </div>
 
     <div id="quickAnalysis" class="quick-analysis hidden">
-        <h3>⚡ Quick Legal Analysis</h3>
+        <h3>Quick Legal Analysis</h3>
         <p>Click any button to run instant analysis on your documents</p>
         <div class="analysis-grid">
-            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">📋 Contract Summary</button>
-            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">⚠️ Risk Assessment</button>
-            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">🔍 Dispute Clauses</button>
-            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">📅 Critical Dates</button>
-            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">🛡️ IP & Confidentiality</button>
-            <button class="analysis-button" onclick="quickAnalysis('financial-terms')">💰 Financial Terms</button>
-            <button class="analysis-button" onclick="quickAnalysis('termination-rights')">🚪 Termination Rights</button>
-            <button class="analysis-button" onclick="quickAnalysis('jurisdiction-law')">🌍 Jurisdiction & Law</button>
+            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">Contract Summary</button>
+            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">Risk Assessment</button>
+            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">Dispute Clauses</button>
+            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">Critical Dates</button>
+            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">IP & Confidentiality</button>
         </div>
     </div>
 
