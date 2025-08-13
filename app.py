@@ -267,7 +267,9 @@ HTML_TEMPLATE = """
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADR Chambers - AI Legal Assistant</title>
 <style>
-/* (same styles as before, trimmed for brevity) */
+.top-contact-bar{background:#2c2c2c;color:#fff;padding:0.5rem 0;font-size:0.9rem}
+.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+.contact-info span{display:flex;align-items:center;gap:0.5rem}
 body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;color:#333}
 .header{background:linear-gradient(135deg,#8B1538 0%,#A91B47 50%,#C41E3A 100%);color:#fff;padding:2rem 1rem;text-align:center}
 .logo{max-width:200px;height:auto;margin-bottom:1rem}
@@ -301,6 +303,8 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 @media(max-width:768px){
   *{box-sizing:border-box}
   body{overflow-x:hidden}
+  .contact-info{flex-direction:column;gap:0.5rem;text-align:center}
+  .contact-info span{justify-content:center}
   .main-layout{flex-direction:column;padding:1rem;gap:1rem}
   .sidebar{width:100%;order:2}
   .chat-section{order:1;min-height:60vh}
@@ -316,6 +320,13 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 </style>
 </head>
 <body>
+    <div class="top-contact-bar">
+        <div class="contact-info">
+            <span>📞 1-800-856-5154</span>
+            <span>✉️ adr@adrchambers.com</span>
+        </div>
+    </div>
+
     <div class="header">
         <img src="https://adrchambers.com/wp-content/themes/adrc/images/adrc-logo-white.png" alt="ADR Chambers" class="logo">
         <h1>AI Legal Assistant</h1>
@@ -461,10 +472,3 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
-
-
-
-
-
-
-
