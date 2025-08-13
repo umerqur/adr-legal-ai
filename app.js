@@ -196,24 +196,11 @@
       const summary = await response.json();
 
       documentCount = summary.total_chunks || 0;
-      document.getElementById("chunksCount").textContent = summary.total_chunks || 0;
-      document.getElementById("filesCount").textContent = (summary.unique_files || []).length;
-
-      const filesList = document.getElementById("filesList");
-      filesList.innerHTML = "<strong>Loaded Documents:</strong>";
-      (summary.unique_files || []).forEach(name => {
-        const div = document.createElement("div");
-        div.textContent = name;
-        filesList.appendChild(div);
-      });
-
-      const documentLibrary = document.getElementById("documentLibrary");
+      
       const quickAnalysis = document.getElementById("quickAnalysis");
       if (documentCount > 0) {
-        documentLibrary.classList.remove("hidden");
         quickAnalysis.classList.remove("hidden");
       } else {
-        documentLibrary.classList.add("hidden");
         quickAnalysis.classList.add("hidden");
       }
     } catch (err) {
