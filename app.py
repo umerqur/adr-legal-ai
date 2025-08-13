@@ -306,7 +306,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
         <img src="https://adrchambers.com/wp-content/themes/adrc/images/adrc-logo-white.png" alt="ADR Chambers" class="logo">
         <h1>AI Legal Assistant</h1>
         <p>Advanced document analysis for arbitration, mediation, and dispute resolution</p>
-        <div class="status-badge">AI Assistant Ready - Advanced Legal Analysis Active</div>
+        <div class="status-badge"><strong>Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice. Consult ADR Chambers for professional guidance.</strong></div>
     </div>
 
     <div class="main-layout">
@@ -447,6 +447,7 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
+
 
 
 
