@@ -356,18 +356,8 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 
             <div id="documentLibrary" class="sidebar-section hidden">
                 <h3>Loaded Documents</h3>
-                <div class="metrics" style="display:flex;gap:1rem;margin-bottom:1rem">
-                    <div class="metric">
-                        <div class="metric-number" id="chunksCount">0</div>
-                        <div class="metric-label">Chunks</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-number" id="filesCount">0</div>
-                        <div class="metric-label">Files</div>
-                    </div>
-                </div>
                 <div id="filesList"></div>
-                <button id="clearButton" class="upload-button" style="background:#dc3545;margin-top:1rem">Clear Library</button>
+                <button id="clearButton" class="upload-button" style="background:#dc3545;margin-top:1rem">Clear All</button>
             </div>
         </div>
     </div>
