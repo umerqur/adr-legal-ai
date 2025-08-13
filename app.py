@@ -390,7 +390,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-align:center">
         <div class="disclaimer">
             <p style="color:#8B1538;margin:0;font-size:.9rem;max-width:900px;margin:0 auto">
-                <strong>⚖️ Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice. Consult ADR Chambers for professional guidance.</strong>
+                <strong>⚖Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice. Consult ADR Chambers for professional guidance.</strong>
             </p>
         </div>
     </div>
@@ -473,3 +473,4 @@ if __name__ == "__main__":
     print("📱 Frontend: http://localhost:8000")
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
+
