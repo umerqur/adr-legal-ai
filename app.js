@@ -18,30 +18,29 @@
 
   function formatMarkdown(text) {
     let formatted = text || "";
-    const lines = formatted.split("\n");
-    const result = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line.indexOf("### ") === 0) result.push("<h3>" + line.substring(4) + "</h3>");
-      else if (line.indexOf("## ") === 0) result.push("<h2>" + line.substring(3) + "</h2>");
-      else if (line.indexOf("# ") === 0) result.push("<h1>" + line.substring(2) + "</h1>");
-      else if (line.indexOf("- ") === 0) result.push("<li>" + line.substring(2) + "</li>");
-      else result.push(line);
-    }
-
-    formatted = result.join("<br>");
-
-    // Simple bold replacement
-    while (formatted.indexOf("**") !== -1) {
-      const start = formatted.indexOf("**");
-      const end = formatted.indexOf("**", start + 2);
-      if (end === -1) break;
-      const before = formatted.substring(0, start);
-      const bold = formatted.substring(start + 2, end);
-      const after = formatted.substring(end + 2);
-      formatted = before + "<strong>" + bold + "</strong>" + after;
-    }
+    
+    // Convert line breaks to HTML first
+    formatted = formatted.replace(/\n/g, '<br>');
+    
+    // Headers
+    formatted = formatted.replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>');
+    formatted = formatted.replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>');
+    formatted = formatted.replace(/# (.*?)(<br>|$)/g, '<h1>$1</h1>');
+    
+    // Bold text - handle both single line and across line breaks
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Italic text
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Bullet points
+    formatted = formatted.replace(/^- (.*?)(<br>|$)/gm, '<li>$1</li>');
+    
+    // Wrap consecutive list items in ul tags
+    formatted = formatted.replace(/(<li>.*<\/li>)/g, function(match) {
+      return '<ul>' + match.replace(/<br>/g, '') + '</ul>';
+    });
+    
     return formatted;
   }
 
