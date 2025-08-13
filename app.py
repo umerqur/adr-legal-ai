@@ -300,9 +300,10 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 .upload-button{width:100%;padding:1rem;background:linear-gradient(135deg,#8B1538 0%,#A91B47 100%);color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;margin-bottom:.5rem}
 .upload-help{font-size:.85rem;color:#666;text-align:center}
 .metric{flex:1;text-align:center;padding:1rem;background:#f8f9fa;border-radius:10px;border-top:3px solid #8B1538}
-.quick-analysis{background:#fff;margin:2rem;padding:2rem;border-radius:15px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.analysis-button{padding:1rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538}
+.quick-analysis{background:#fff;margin:2rem;padding:1.5rem;border-radius:15px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem}
+.analysis-button{padding:0.75rem 1rem;background:#fff;border:1px solid #e5e5e5;border-radius:8px;font-weight:500;cursor:pointer;color:#333;transition:all 0.2s ease;font-size:0.9rem}
+.analysis-button:hover{border-color:#8B1538;color:#8B1538;box-shadow:0 2px 8px rgba(139,21,56,0.1)}
 .hidden{display:none}
 .loading{opacity:.7;font-style:italic}
 @media(max-width:768px){
@@ -360,6 +361,16 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 
             <div id="documentLibrary" class="sidebar-section hidden">
                 <h3>Loaded Documents</h3>
+                <div class="metrics" style="display:flex;gap:1rem;margin-bottom:1rem">
+                    <div class="metric">
+                        <div class="metric-number" id="chunksCount">0</div>
+                        <div class="metric-label">Chunks</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number" id="filesCount">0</div>
+                        <div class="metric-label">Files</div>
+                    </div>
+                </div>
                 <div id="filesList"></div>
                 <button id="clearButton" class="upload-button" style="background:#dc3545;margin-top:1rem">Clear All</button>
             </div>
@@ -367,17 +378,16 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     </div>
 
     <div id="quickAnalysis" class="quick-analysis hidden">
-        <h3>⚡ Quick Legal Analysis</h3>
-        <p>Click any button to run instant analysis on your documents</p>
+        <h3>Quick Analysis</h3>
         <div class="analysis-grid">
-            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">📋 Contract Summary</button>
-            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">⚠️ Risk Assessment</button>
-            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">🔍 Dispute Clauses</button>
-            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">📅 Critical Dates</button>
-            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">🛡️ IP & Confidentiality</button>
-            <button class="analysis-button" onclick="quickAnalysis('financial-terms')">💰 Financial Terms</button>
-            <button class="analysis-button" onclick="quickAnalysis('termination-rights')">🚪 Termination Rights</button>
-            <button class="analysis-button" onclick="quickAnalysis('jurisdiction-law')">🌍 Jurisdiction & Law</button>
+            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">Contract Summary</button>
+            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">Risk Assessment</button>
+            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">Dispute Clauses</button>
+            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">Critical Dates</button>
+            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">IP & Confidentiality</button>
+            <button class="analysis-button" onclick="quickAnalysis('financial-terms')">Financial Terms</button>
+            <button class="analysis-button" onclick="quickAnalysis('termination-rights')">Termination Rights</button>
+            <button class="analysis-button" onclick="quickAnalysis('jurisdiction-law')">Jurisdiction & Law</button>
         </div>
     </div>
 
