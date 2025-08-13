@@ -6,8 +6,10 @@
   let isLoading = false;
 
   const analysisQueries = {
+    "contract-summary": "Provide a comprehensive summary of the key terms, parties, and main provisions of this contract",
     "risk-assessment": "Identify and analyze all potential legal risks, liability exposures, and areas of concern",
     "dispute-clauses": "Extract and analyze all dispute resolution mechanisms, arbitration clauses, and mediation provisions",
+    "critical-dates": "Identify all important dates, deadlines, milestones, and time-sensitive obligations",
     "ip-confidentiality": "Analyze intellectual property rights, confidentiality provisions, and proprietary information clauses",
     "financial-terms": "Review payment obligations, penalties, damages, and financial risk provisions",
     "termination-rights": "Analyze termination conditions, notice requirements, and post-termination obligations",
@@ -234,7 +236,12 @@
   // Make quickAnalysis available to buttons in HTML
   window.quickAnalysis = function (type) {
     const query = analysisQueries[type];
-    if (query) sendMessage(query);
+    if (query) {
+      console.log("Quick analysis triggered:", type, "->", query);
+      sendMessage(query);
+    } else {
+      console.error("No query found for analysis type:", type);
+    }
   };
 
   // Init
