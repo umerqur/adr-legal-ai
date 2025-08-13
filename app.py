@@ -348,7 +348,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 
         <div class="sidebar">
             <div class="sidebar-section">
-                <h3>📁 Document Processing</h3>
+                <h3>Document Processing</h3>
                 <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" style="display:none">
                 <button id="uploadButton" class="upload-button" type="button">Upload Documents</button>
                 <p class="upload-help">Supports Word documents, PDFs, and text files</p>
