@@ -311,6 +311,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
   .messages-container{max-height:50vh;min-height:300px}
   .input-container{gap:0.5rem}
   .message-input{flex:1;min-width:0;font-size:16px;padding:0.8rem 1rem}
+  .message-input::placeholder{content:"Ask about documents..."}
   .send-button{flex-shrink:0;min-width:70px;padding:0.8rem 1.5rem}
   .header h1{font-size:2rem}
   .status-badge{padding:0.5rem 1rem;font-size:0.8rem}
@@ -322,7 +323,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 <body>
     <div class="top-contact-bar">
         <div class="contact-info">
-            <span>📞 1-800-856-5154</span>
+            <span>1-800-856-5154</span>
             <span>ADR@ADRCHAMBERS.COM</span>
         </div>
     </div>
@@ -339,7 +340,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
             <div class="messages-container" id="messagesContainer"></div>
             <div class="input-section">
                 <div class="input-container">
-                    <input type="text" id="messageInput" class="message-input" placeholder="Ask anything about your legal documents...">
+                    <input type="text" id="messageInput" class="message-input" placeholder="Ask legal questions...">
                     <button id="sendButton" class="send-button" type="button">Send</button>
                 </div>
             </div>
