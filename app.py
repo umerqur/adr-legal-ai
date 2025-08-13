@@ -268,7 +268,7 @@ HTML_TEMPLATE = """
 <title>ADR Chambers - AI Legal Assistant</title>
 <style>
 .top-contact-bar{background:#2c2c2c;color:#fff;padding:0.5rem 0;font-size:0.9rem}
-.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:flex-start;align-items:center}
+.contact-info{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
 .contact-info span{display:flex;align-items:center;gap:0.5rem}
 body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;color:#333}
 .header{background:linear-gradient(135deg,#8B1538 0%,#A91B47 50%,#C41E3A 100%);color:#fff;padding:2rem 1rem;text-align:center}
@@ -297,7 +297,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 .metric{flex:1;text-align:center;padding:1rem;background:#f8f9fa;border-radius:10px;border-top:3px solid #8B1538}
 .quick-analysis{background:#fff;margin:2rem;padding:2rem;border-radius:15px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
 .analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.analysis-button{padding:0.7rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538;font-size:0.9rem}
+.analysis-button{padding:1rem;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border:2px solid #8B1538;border-radius:10px;font-weight:600;cursor:pointer;color:#8B1538}
 .hidden{display:none}
 .loading{opacity:.7;font-style:italic}
 @media(max-width:768px){
@@ -362,18 +362,6 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     </div>
 
     <div id="quickAnalysis" class="quick-analysis hidden">
-        <h3>Quick Legal Analysis</h3>
-        <p>Click any button to run instant analysis on your documents</p>
-        <div class="analysis-grid">
-            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">Contract Summary</button>
-            <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">Risk Assessment</button>
-            <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">Dispute Clauses</button>
-            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">Critical Dates</button>
-            <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">IP & Confidentiality</button>
-        </div>
-    </div>
-
-    <div id="quickAnalysis" class="quick-analysis hidden">
         <h3>⚡ Quick Legal Analysis</h3>
         <p>Click any button to run instant analysis on your documents</p>
         <div class="analysis-grid">
@@ -388,7 +376,11 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
         </div>
     </div>
 
-    <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-
+    <div class="footer" style="background:#f8f9fa;padding:1rem 2rem;border-top:2px solid #8B1538;text-align:center">
+        <p style="color:#8B1538;margin:0;font-size:.9rem">
+            <strong>Legal Disclaimer: This AI provides informational analysis only and does not constitute legal advice</strong>
+        </p>
+    </div>
 
     <script src="/static/app.js"></script>
 </body>
