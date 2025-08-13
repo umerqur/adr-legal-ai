@@ -19,26 +19,27 @@
   function formatMarkdown(text) {
     let formatted = text || "";
     
-    // Handle tables first (before converting line breaks)
-    const tableRegex = /(\|.*\|.*<br>)+/g;
+    // Convert line breaks to HTML first
     formatted = formatted.replace(/\n/g, '<br>');
     
-    // Process tables
-    formatted = formatted.replace(tableRegex, function(tableMatch) {
-      const rows = tableMatch.split('<br>').filter(row => row.trim() && row.includes('|'));
-      if (rows.length < 2) return tableMatch;
+    // Better table detection - look for lines with multiple pipes
+    const tablePattern = /((?:\|[^|]*\|[^|]*\|.*?<br>)+)/g;
+    formatted = formatted.replace(tablePattern, function(tableMatch) {
+      const lines = tableMatch.split('<br>').filter(line => line.trim() && line.includes('|'));
+      if (lines.length < 2) return tableMatch;
       
       let tableHtml = '<table style="border-collapse: collapse; width: 100%; margin: 1rem 0; border: 1px solid #ddd;">';
+      let isFirstRow = true;
       
-      rows.forEach((row, index) => {
-        const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
-        if (cells.length === 0) return;
+      lines.forEach((line, index) => {
+        // Skip separator rows (--- rows)
+        if (line.includes('---')) return;
         
-        const isHeader = index === 0 || (index === 1 && row.includes('---'));
-        if (index === 1 && row.includes('---')) return; // Skip separator row
+        const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+        if (cells.length < 2) return;
         
-        const tag = isHeader ? 'th' : 'td';
-        const style = isHeader ? 
+        const tag = isFirstRow ? 'th' : 'td';
+        const style = isFirstRow ? 
           'style="background: #f8f9fa; font-weight: bold; padding: 0.75rem; border: 1px solid #ddd; text-align: left;"' :
           'style="padding: 0.75rem; border: 1px solid #ddd;"';
         
@@ -47,6 +48,8 @@
           tableHtml += `<${tag} ${style}>${cell}</${tag}>`;
         });
         tableHtml += '</tr>';
+        
+        isFirstRow = false;
       });
       
       tableHtml += '</table>';
@@ -58,7 +61,7 @@
     formatted = formatted.replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>');
     formatted = formatted.replace(/# (.*?)(<br>|$)/g, '<h1>$1</h1>');
     
-    // Bold text - handle both single line and across line breaks
+    // Bold text
     formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     
     // Italic text
@@ -68,7 +71,7 @@
     formatted = formatted.replace(/^- (.*?)(<br>|$)/gm, '<li>$1</li>');
     
     // Wrap consecutive list items in ul tags
-    formatted = formatted.replace(/(<li>.*<\/li>)/g, function(match) {
+    formatted = formatted.replace(/(<li>.*?<\/li>(<br>)?)+/g, function(match) {
       return '<ul>' + match.replace(/<br>/g, '') + '</ul>';
     });
     
@@ -137,7 +140,7 @@
       addMessage("system", "Error uploading documents. Please try again.");
     } finally {
       const uploadButton = document.getElementById("uploadButton");
-      uploadButton.textContent = "Upload Documents";
+      uploadButton.textContent = "Upload Legal Documents";
       uploadButton.disabled = false;
       document.getElementById("fileInput").value = "";
     }
