@@ -380,10 +380,8 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
     <div id="quickAnalysis" class="quick-analysis hidden">
         <h3>Quick Analysis</h3>
         <div class="analysis-grid">
-            <button class="analysis-button" onclick="quickAnalysis('contract-summary')">Contract Summary</button>
             <button class="analysis-button" onclick="quickAnalysis('risk-assessment')">Risk Assessment</button>
             <button class="analysis-button" onclick="quickAnalysis('dispute-clauses')">Dispute Clauses</button>
-            <button class="analysis-button" onclick="quickAnalysis('critical-dates')">Critical Dates</button>
             <button class="analysis-button" onclick="quickAnalysis('ip-confidentiality')">IP & Confidentiality</button>
             <button class="analysis-button" onclick="quickAnalysis('financial-terms')">Financial Terms</button>
             <button class="analysis-button" onclick="quickAnalysis('termination-rights')">Termination Rights</button>
