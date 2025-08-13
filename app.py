@@ -323,8 +323,7 @@ body{font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa;co
 <body>
     <div class="top-contact-bar">
         <div class="contact-info">
-            <span>1-800-856-5154</span>
-            <span>ADR@ADRCHAMBERS.COM</span>
+            <span>1-800-856-5154 | ADR@ADRCHAMBERS.COM</span>
         </div>
     </div>
 
