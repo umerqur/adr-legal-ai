@@ -210,11 +210,14 @@
 
       documentCount = summary.total_chunks || 0;
       
+      // Show Quick Analysis in sidebar when documents are loaded
       const quickAnalysis = document.getElementById("quickAnalysis");
       if (documentCount > 0) {
         quickAnalysis.classList.remove("hidden");
+        console.log("Showing quick analysis - document count:", documentCount);
       } else {
         quickAnalysis.classList.add("hidden");
+        console.log("Hiding quick analysis - no documents");
       }
     } catch (err) {
       console.error("Error loading document summary:", err);
